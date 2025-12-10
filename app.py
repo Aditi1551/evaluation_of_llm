@@ -14,7 +14,7 @@ from qwen_vl_utils import process_vision_info
 
 # ------------- Model load (Qwen2-VL) -------------
 
-MODEL_NAME = "Qwen/Qwen2-VL-7B-Instruct"  # can use 2B for lighter load [web:105][web:119]
+MODEL_NAME = "Qwen/Qwen2-VL-2B-Instruct"  # can use 2B for lighter load [web:105][web:119]
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 dtype = torch.float16 if device == "cuda" else torch.float32
@@ -47,7 +47,7 @@ class InvoiceSchema(BaseModel):
 
 # ------------- Helpers -------------
 
-def pdf_to_images(pdf_bytes: bytes, dpi: int = 200) -> List[Image.Image]:
+def pdf_to_images(pdf_bytes: bytes, dpi: int = 50) -> List[Image.Image]:
     """Render each page of PDF as PIL Image."""
     images: List[Image.Image] = []
     with fitz.open(stream=pdf_bytes, filetype="pdf") as doc:
@@ -139,7 +139,7 @@ async def extract_invoice(
     pdf_bytes = await file.read()
 
     try:
-        images = pdf_to_images(pdf_bytes, dpi=200)
+        images = pdf_to_images(pdf_bytes, dpi=50)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"PDF to image error: {e}")
 
