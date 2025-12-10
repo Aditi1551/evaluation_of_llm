@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+qwen-vl-utils
+transformers
+torch>=2.1
+torchvision
+pillow
+PyMuPDF
+pydantic[dotenv]
+python-multipart
+accelerate
